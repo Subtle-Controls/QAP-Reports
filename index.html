@@ -12,7 +12,7 @@ body{background:var(--bg);min-height:100vh;}
 button{cursor:pointer;font-family:inherit;}
 
 /* HEADER */
-.hdr{background:var(--navy);padding:8px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;border-bottom:3px solid var(--green);position:sticky;top:0;z-index:100;}
+.hdr{background:var(--navy);padding:8px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;border-bottom:3px solid var(--green);position:sticky;top:47px;z-index:100;}
 .logo-wrap{display:flex;align-items:center;gap:10px;}
 .logo-img{height:42px;object-fit:contain;}
 .logo-txt .l1{font-size:14px;font-weight:700;color:#fff;letter-spacing:.8px;}
@@ -278,7 +278,74 @@ table.rtbl{width:100%;border-collapse:collapse;}
 .mbtn-cancel{background:var(--bg);color:var(--text);}
 .mbtn-ok{background:var(--navy);color:#fff;}
 
+/* APP NAV */
+#app-nav{background:#1B2580;padding:0 18px;display:flex;align-items:center;gap:0;border-bottom:2px solid #22B050;position:sticky;top:0;z-index:200;}
+.nav-tab{padding:12px 20px;font-size:13px;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;}
+.nav-tab:hover{color:#fff;}
+.nav-tab.active{color:#fff;border-bottom-color:#22B050;}
+.nav-new-btn{margin-left:auto;padding:7px 16px;background:#22B050;color:#fff;border:none;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer;}
+.nav-new-btn:hover{background:#1a9a42;}
+
+/* DASHBOARD VIEW */
+#view-dashboard{padding:24px 18px;max-width:1100px;margin:0 auto;}
+.dash-welcome{background:linear-gradient(120deg,#1B2580 0%,#0f1855 100%);border-radius:10px;padding:24px 28px;margin-bottom:20px;color:#fff;}
+.dash-welcome h2{font-size:18px;font-weight:700;margin-bottom:4px;}
+.dash-welcome p{font-size:12px;color:rgba(255,255,255,.55);}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px;}
+.dash-stat-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:4px;}
+.dash-stat-card .stat-val{font-size:28px;font-weight:700;color:var(--navy);}
+.dash-stat-card .stat-lbl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.dash-stat-card.green .stat-val{color:var(--green);}
+.dash-stat-card.amber .stat-val{color:#f59e0b;}
+.dash-recent{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.dash-recent-hd{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;}
+.dash-recent-list{padding:0;}
+.dash-recent-item{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #f0f0f0;font-size:12px;cursor:pointer;transition:background .1s;}
+.dash-recent-item:hover{background:#fafbff;}
+.dash-recent-item:last-child{border-bottom:none;}
+.dash-recent-item .ri-type{font-size:9px;font-weight:700;color:var(--navy);background:var(--navy-lt);padding:2px 7px;border-radius:3px;text-transform:uppercase;}
+.dash-recent-item .ri-name{flex:1;font-weight:500;color:var(--text);}
+.dash-recent-item .ri-customer{color:var(--muted);font-size:11px;}
+.dash-recent-item .ri-date{color:var(--muted);font-size:10px;}
+.dash-recent-empty{padding:24px;text-align:center;color:var(--muted);font-size:12px;}
+
+/* REPORTS VIEW */
+#view-reports{padding:24px 18px;max-width:1200px;margin:0 auto;}
+.reports-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+.reports-toolbar input[type="text"]{flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;background:#fff;}
+.reports-toolbar input[type="text"]:focus{outline:none;border-color:var(--navy);}
+.reports-toolbar select{border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;background:#fff;min-width:140px;}
+.reports-toolbar select:focus{outline:none;border-color:var(--navy);}
+.reports-table-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.reports-table{width:100%;border-collapse:collapse;}
+.reports-table th{background:#f5f7ff;font-size:9px;font-weight:700;color:var(--navy);padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
+.reports-table td{font-size:11px;color:var(--text);padding:10px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
+.reports-table tr:last-child td{border-bottom:none;}
+.reports-table tr:hover td{background:#fafbff;}
+.reports-table .status-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;}
+.reports-table .status-badge.inprogress{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
+.reports-table .status-badge.completed{background:#dcfce7;color:#166534;border:1px solid #86efac;}
+.reports-table .action-btn{padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:#fff;font-size:10px;font-weight:600;cursor:pointer;margin-right:4px;}
+.reports-table .action-btn:hover{background:var(--navy-lt);border-color:var(--navy);color:var(--navy);}
+.reports-table .action-btn.danger{color:#dc2626;}
+.reports-table .action-btn.danger:hover{background:#fee2e2;border-color:#fecaca;color:#dc2626;}
+.reports-empty{padding:40px;text-align:center;color:var(--muted);font-size:12px;}
+
+@media(max-width:768px){
+  #app-nav{padding:0 10px;}
+  .nav-tab{padding:10px 12px;font-size:11px;}
+  .nav-new-btn{padding:6px 10px;font-size:11px;}
+  #view-dashboard{padding:14px 10px;}
+  .dash-stats{grid-template-columns:1fr 1fr;}
+  #view-reports{padding:14px 10px;}
+  .reports-toolbar{flex-direction:column;}
+  .reports-toolbar input[type="text"],.reports-toolbar select{width:100%;min-width:unset;}
+  .reports-table-wrap{overflow-x:auto;}
+}
+
 @media print{
+  #app-nav{display:none!important;}
+  #view-dashboard,#view-reports{display:none!important;}
   .hdr,.stepper,.pbar-wrap,.sidebar,.sec-foot,.add-p,.del-btn,.rpt-close,.rpt-actions,.gen-banner,#modal-bg{display:none!important;}
   #rpt-overlay{position:static!important;background:none!important;padding:0!important;display:block!important;}
   .rpt-doc{box-shadow:none!important;max-width:100%!important;}
@@ -288,6 +355,66 @@ table.rtbl{width:100%;border-collapse:collapse;}
 </style>
 </head>
 <body>
+
+<!-- APP NAVIGATION -->
+<div id="app-nav">
+  <span class="nav-tab active" onclick="showView('dashboard')">Dashboard</span>
+  <span class="nav-tab" onclick="showView('reports')">Reports</span>
+  <span class="nav-tab" onclick="showView('editor')">Editor</span>
+  <button class="nav-new-btn" onclick="newReport()">+ New Report</button>
+</div>
+
+<!-- DASHBOARD VIEW -->
+<div id="view-dashboard" style="display:none">
+  <div class="dash-welcome">
+    <h2>QAP Test Report Generator</h2>
+    <p>Manage and generate Quality Assurance Plan test reports for your projects.</p>
+  </div>
+  <div class="dash-stats" id="dash-stats">
+    <div class="dash-stat-card"><span class="stat-lbl">Total Reports</span><span class="stat-val" id="stat-total">—</span></div>
+    <div class="dash-stat-card amber"><span class="stat-lbl">In Progress</span><span class="stat-val" id="stat-inprogress">—</span></div>
+    <div class="dash-stat-card green"><span class="stat-lbl">Completed</span><span class="stat-val" id="stat-completed">—</span></div>
+    <div class="dash-stat-card"><span class="stat-lbl">Customers</span><span class="stat-val" id="stat-customers">—</span></div>
+  </div>
+  <div class="dash-recent">
+    <div class="dash-recent-hd">Recent Reports</div>
+    <div id="dash-recent-list" class="dash-recent-list">
+      <div class="dash-recent-empty">Loading...</div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORTS VIEW -->
+<div id="view-reports" style="display:none">
+  <div class="reports-toolbar">
+    <input type="text" id="reports-search" placeholder="Search by project, customer, report type..." oninput="filterReports()">
+    <select id="reports-filter-status" onchange="filterReports()">
+      <option value="">All Status</option>
+      <option value="inprogress">In Progress</option>
+      <option value="completed">Completed</option>
+    </select>
+  </div>
+  <div class="reports-table-wrap">
+    <table class="reports-table" id="reports-table">
+      <thead>
+        <tr>
+          <th>Report Type</th>
+          <th>Project</th>
+          <th>Customer</th>
+          <th>Status</th>
+          <th>Last Updated</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="reports-tbody">
+        <tr><td colspan="6" class="reports-empty">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- EDITOR VIEW -->
+<div id="view-editor" style="display:none">
 
 <!-- HEADER -->
 <div class="hdr">
@@ -518,6 +645,8 @@ table.rtbl{width:100%;border-collapse:collapse;}
 </div>
 
 <input type="file" id="file-input" accept=".json" style="display:none" onchange="onFileLoad(event)">
+
+</div><!-- /view-editor -->
 
 <script>
 // ─────────────────────────────────────────────
@@ -1698,6 +1827,162 @@ function rSignBlock(title,name,desig,date){
     +'</table><span class="sline"></span></div>';
 }
 
+// ─────────────────────────────────────────────
+// APP NAVIGATION & VIEWS
+// ─────────────────────────────────────────────
+var _allReportsCache = [];
+
+function showView(view) {
+  var views = ['dashboard', 'reports', 'editor'];
+  views.forEach(function(v) {
+    var el = document.getElementById('view-' + v);
+    if (el) el.style.display = (v === view ? '' : 'none');
+  });
+  // Update nav tabs
+  var tabs = document.querySelectorAll('#app-nav .nav-tab');
+  tabs.forEach(function(tab) {
+    var tabView = tab.textContent.trim().toLowerCase();
+    tab.className = 'nav-tab' + (tabView === view ? ' active' : '');
+  });
+  // Load data for views
+  if (view === 'dashboard') loadDashboard();
+  if (view === 'reports') loadReports();
+}
+
+function loadDashboard() {
+  if (!sbClient) {
+    document.getElementById('stat-total').textContent = '0';
+    document.getElementById('stat-inprogress').textContent = '0';
+    document.getElementById('stat-completed').textContent = '0';
+    document.getElementById('stat-customers').textContent = '0';
+    document.getElementById('dash-recent-list').innerHTML = '<div class="dash-recent-empty">Supabase not connected</div>';
+    return;
+  }
+  sbClient.from('qap_reports').select('*').order('updated_at', { ascending: false }).then(function(res) {
+    if (res.error) {
+      console.warn('[QAP] Dashboard load error:', res.error.message);
+      return;
+    }
+    var rows = res.data || [];
+    _allReportsCache = rows;
+    var total = rows.length;
+    var inprogress = rows.filter(function(r) { return r.status === 'inprogress'; }).length;
+    var completed = rows.filter(function(r) { return r.status === 'completed'; }).length;
+    var customers = [];
+    rows.forEach(function(r) { if (r.customer && customers.indexOf(r.customer) === -1) customers.push(r.customer); });
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-inprogress').textContent = inprogress;
+    document.getElementById('stat-completed').textContent = completed;
+    document.getElementById('stat-customers').textContent = customers.length;
+
+    // Recent 5
+    var recent = rows.slice(0, 5);
+    var listEl = document.getElementById('dash-recent-list');
+    if (recent.length === 0) {
+      listEl.innerHTML = '<div class="dash-recent-empty">No reports yet. Click "+ New Report" to get started.</div>';
+      return;
+    }
+    var h = '';
+    recent.forEach(function(r) {
+      var dt = r.updated_at ? new Date(r.updated_at).toLocaleDateString() : '';
+      var rtype = (r.report_type || 'internal').toUpperCase();
+      h += '<div class="dash-recent-item" onclick="openReport(\'' + eh(r.id) + '\')">';
+      h += '<span class="ri-type">' + eh(rtype) + '</span>';
+      h += '<span class="ri-name">' + eh(r.project_name || 'Untitled') + '</span>';
+      h += '<span class="ri-customer">' + eh(r.customer || '') + '</span>';
+      h += '<span class="ri-date">' + eh(dt) + '</span>';
+      h += '</div>';
+    });
+    listEl.innerHTML = h;
+  });
+}
+
+function loadReports() {
+  if (!sbClient) {
+    document.getElementById('reports-tbody').innerHTML = '<tr><td colspan="6" class="reports-empty">Supabase not connected</td></tr>';
+    return;
+  }
+  sbClient.from('qap_reports').select('*').order('updated_at', { ascending: false }).then(function(res) {
+    if (res.error) {
+      console.warn('[QAP] Reports load error:', res.error.message);
+      return;
+    }
+    _allReportsCache = res.data || [];
+    filterReports();
+  });
+}
+
+function filterReports() {
+  var search = (document.getElementById('reports-search').value || '').toLowerCase();
+  var statusFilter = document.getElementById('reports-filter-status').value;
+  var rows = _allReportsCache.filter(function(r) {
+    if (statusFilter && r.status !== statusFilter) return false;
+    if (search) {
+      var haystack = ((r.project_name || '') + ' ' + (r.customer || '') + ' ' + (r.report_type || '') + ' ' + (r.project_no || '')).toLowerCase();
+      if (haystack.indexOf(search) === -1) return false;
+    }
+    return true;
+  });
+  renderReportsTable(rows);
+}
+
+function renderReportsTable(rows) {
+  var tbody = document.getElementById('reports-tbody');
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="reports-empty">No reports found.</td></tr>';
+    return;
+  }
+  var h = '';
+  rows.forEach(function(r) {
+    var dt = r.updated_at ? new Date(r.updated_at).toLocaleDateString() + ' ' + new Date(r.updated_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+    var rtype = (r.report_type || 'internal');
+    var statusClass = r.status === 'completed' ? 'completed' : 'inprogress';
+    var statusLabel = r.status === 'completed' ? 'Completed' : 'In Progress';
+    h += '<tr>';
+    h += '<td>' + eh(rtype.charAt(0).toUpperCase() + rtype.slice(1)) + '</td>';
+    h += '<td>' + eh(r.project_name || 'Untitled') + (r.project_no ? ' <span style="color:var(--muted);font-size:10px;">(' + eh(r.project_no) + ')</span>' : '') + '</td>';
+    h += '<td>' + eh(r.customer || '—') + '</td>';
+    h += '<td><span class="status-badge ' + statusClass + '">' + statusLabel + '</span></td>';
+    h += '<td>' + eh(dt) + '</td>';
+    h += '<td>';
+    h += '<button class="action-btn" onclick="openReport(\'' + eh(r.id) + '\')">Open</button>';
+    h += '<button class="action-btn danger" onclick="deleteReport(\'' + eh(r.id) + '\')">Delete</button>';
+    h += '</td>';
+    h += '</tr>';
+  });
+  tbody.innerHTML = h;
+}
+
+function deleteReport(id) {
+  if (!confirm('Are you sure you want to delete this report? This cannot be undone.')) return;
+  if (!sbClient) return;
+  sbClient.from('qap_reports').delete().eq('id', id).then(function(res) {
+    if (res.error) {
+      alert('Error deleting report: ' + res.error.message);
+      return;
+    }
+    _allReportsCache = _allReportsCache.filter(function(r) { return r.id !== id; });
+    filterReports();
+    // Also refresh dashboard stats if visible
+    var dashEl = document.getElementById('view-dashboard');
+    if (dashEl && dashEl.style.display !== 'none') loadDashboard();
+  });
+}
+
+function openReport(id) {
+  // Navigate to editor with reportId
+  var url = window.location.pathname + '?reportId=' + encodeURIComponent(id);
+  window.location.href = url;
+}
+
+function newReport() {
+  // Create a new blank report and open editor
+  var newId = 'qap_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  var url = window.location.pathname + '?reportId=' + encodeURIComponent(newId);
+  window.location.href = url;
+}
+
 // Close modal on bg click
 document.getElementById('modal-bg').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.getElementById('param-modal-bg').addEventListener('click',function(e){if(e.target===this)closeParamModal();});
@@ -1712,6 +1997,8 @@ window.addEventListener('DOMContentLoaded', function() {
     // Check if loading an existing report by ID
     var reportId = params.get('reportId');
     if (reportId) {
+      // Show editor view directly
+      showView('editor');
       S.reportId = reportId;
       // Try to load from Supabase
       loadFromSupabase(reportId, function(cloudData) {
@@ -1728,10 +2015,16 @@ window.addEventListener('DOMContentLoaded', function() {
         }
       });
     } else {
-      // New report — generate a unique ID
-      S.reportId = S.reportId || ('qap_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6));
+      // No reportId — show dashboard
+      showView('dashboard');
     }
     
+    // If reportId present, also check for pre-fill params
+    if (reportId) {
+      // New report — ensure it has an ID
+      S.reportId = S.reportId || reportId;
+    }
+
     // Map URL param names to S.proj field names
     var fieldMap = {
       'customer': 'customer',
