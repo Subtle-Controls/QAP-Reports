@@ -232,9 +232,8 @@ a{color:var(--navy);text-decoration:none;}
 .act-btn.danger:hover{background:#FEE2E2;border-color:#FECACA;}
 
 /* ── EDITOR PAGE ─────────────────────────────────────────── */
-.editor-page{display:flex;flex-direction:column;height:calc(100vh - var(--hdr-h) - var(--nav-h));}
-
-/* STEPPER */
+.editor-page{display:flex;flex-direction:column;height:calc(100vh - var(--hdr-h) - var(--nav-h));overflow:hidden;}
+.editor-body{display:flex;flex:1;overflow:hidden;min-height:0;}
 .stepper{
   background:#fff;border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0 24px;height:48px;
@@ -278,9 +277,6 @@ a{color:var(--navy);text-decoration:none;}
 .rpt-type-badge{padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;}
 .rt-int{background:#EDE9FE;color:#5B21B6;}
 .rt-wit{background:#E0F2FE;color:#0C4A6E;}
-
-/* EDITOR BODY */
-.editor-body{display:flex;flex:1;overflow:hidden;}
 
 /* SECTION SIDEBAR */
 .sec-sidebar{
