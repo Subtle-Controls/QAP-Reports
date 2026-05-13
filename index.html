@@ -954,7 +954,8 @@ try { sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); document.get
 
 var _saveTimer = null;
 function saveToSupabase(){
-  if(!sbClient||!S.reportId) return;
+  if(!sbClient) return;
+  if(!S.reportId) S.reportId='qap_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
   document.getElementById('sync-dot').className='sync-dot syncing';
   clearTimeout(_saveTimer);
   _saveTimer = setTimeout(function(){
