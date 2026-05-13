@@ -234,6 +234,11 @@ a{color:var(--navy);text-decoration:none;}
 /* ── EDITOR PAGE ─────────────────────────────────────────── */
 .editor-page{display:flex;flex-direction:column;height:calc(100vh - var(--hdr-h) - var(--nav-h));overflow:hidden;}
 .editor-body{display:flex;flex:1;overflow:hidden;min-height:0;}
+
+/* PANELS (step visibility) */
+.panel{display:none;}
+.panel.active{display:block;}
+
 .stepper{
   background:#fff;border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0 24px;height:48px;
