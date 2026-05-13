@@ -1304,7 +1304,15 @@ function restoreFields(){
            inspDate:'f-inspDate',revName:'f-revName',revDesig:'f-revDesig',revDate:'f-revDate'};
   Object.keys(map).forEach(function(k){
     var el=document.getElementById(map[k]);
-    if(el) el.value=S.proj[k]||'';
+    if(el) {
+      var val = S.proj[k]||'';
+      // Normalize date fields to yyyy-MM-dd for date inputs
+      if (el.type === 'date' && val && !/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+        try { var d = new Date(val); if (!isNaN(d)) val = d.toISOString().split('T')[0]; else val = ''; } catch(e) { val = ''; }
+        S.proj[k] = val;
+      }
+      el.value = val;
+    }
   });
   syncStatusControl();
 }
