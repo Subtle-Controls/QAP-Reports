@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>QAP Test Report Generator — Subtle Controls</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 :root{--navy:#1B2580;--green:#22B050;--navy-lt:#E8EAF6;--green-lt:#E6F7ED;--border:#D1D5DB;--bg:#F4F6F9;--text:#1a1a2e;--muted:#6B7280;}
 *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Arial,sans-serif;}
@@ -857,7 +858,48 @@ function init(){
   updateProgress();
 }
 
-function save(){try{localStorage.setItem('qap2',JSON.stringify(S));}catch(e){}}
+function save(){
+  try{localStorage.setItem('qap2',JSON.stringify(S));}catch(e){}
+  // Sync to Supabase in background
+  saveToSupabase();
+}
+
+// ─── SUPABASE SYNC ───────────────────────────────────────────────────────────
+var SUPABASE_URL = 'https://omymhtcuzxmxejvdkhor.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9teW1odGN1enhtZWp2ZGtob3IiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc0NzA2NjI0NywiZXhwIjoyMDYyNjQyMjQ3fQ.5m3xQ8xLHgDAOeVEm5OB8MFJHmEbKJqBRmMctLJMbhQ';
+var sbClient = null;
+try { sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.warn('Supabase not available'); }
+
+var _saveTimer = null;
+function saveToSupabase() {
+  if (!sbClient || !S.reportId) return;
+  // Debounce — save at most every 3 seconds
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(function() {
+    var row = {
+      id: S.reportId,
+      project_id: S.proj.projNo || '',
+      project_no: S.proj.projNo || '',
+      project_name: S.proj.projName || '',
+      customer: S.proj.customer || '',
+      report_type: S.rptType || 'internal',
+      status: S.status || 'inprogress',
+      data: JSON.parse(JSON.stringify(S)),
+      updated_at: new Date().toISOString()
+    };
+    sbClient.from('qap_reports').upsert(row, { onConflict: 'id' }).then(function(res) {
+      if (res.error) console.warn('[QAP sync] save error:', res.error.message);
+    });
+  }, 3000);
+}
+
+function loadFromSupabase(reportId, callback) {
+  if (!sbClient) { callback(null); return; }
+  sbClient.from('qap_reports').select('*').eq('id', reportId).single().then(function(res) {
+    if (res.data && res.data.data) callback(res.data.data);
+    else callback(null);
+  });
+}
 
 function cloneData(o){return JSON.parse(JSON.stringify(o));}
 
@@ -1657,6 +1699,30 @@ window.addEventListener('DOMContentLoaded', function() {
   // Read URL parameters passed from Subtle OS and pre-fill project info
   try {
     var params = new URLSearchParams(window.location.search);
+    
+    // Check if loading an existing report by ID
+    var reportId = params.get('reportId');
+    if (reportId) {
+      S.reportId = reportId;
+      // Try to load from Supabase
+      loadFromSupabase(reportId, function(cloudData) {
+        if (cloudData) {
+          Object.assign(S, cloudData);
+          restoreFields();
+          syncStatusControl();
+          setRptType(S.rptType || 'internal', true);
+          renderSetupGrid();
+          renderSidebar();
+          showStep(S.step || 1);
+          updateProgress();
+          save(); // save to localStorage too
+        }
+      });
+    } else {
+      // New report — generate a unique ID
+      S.reportId = S.reportId || ('qap_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6));
+    }
+    
     // Map URL param names to S.proj field names
     var fieldMap = {
       'customer': 'customer',
