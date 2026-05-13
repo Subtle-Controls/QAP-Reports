@@ -866,7 +866,8 @@ function save(){
 
 // ─── SUPABASE SYNC ───────────────────────────────────────────────────────────
 var SUPABASE_URL = 'https://omymhtcuzxmxejvdkhor.supabase.co';
-var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9teW1odGN1enhtZWp2ZGtob3IiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc0NzA2NjI0NywiZXhwIjoyMDYyNjQyMjQ3fQ.5m3xQ8xLHgDAOeVEm5OB8MFJHmEbKJqBRmMctLJMbhQ';
+// IMPORTANT: Replace this with your actual anon key from Supabase → Settings → API
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9teW1odGN1enhteGVqdmRraG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0MjQ3MjksImV4cCI6MjA5NDAwMDcyOX0.d0u1tR3Hr8ovrepW1_EQfkZ6E729gseSNHqCB31ryIc';
 var sbClient = null;
 try { sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.warn('Supabase not available'); }
 
