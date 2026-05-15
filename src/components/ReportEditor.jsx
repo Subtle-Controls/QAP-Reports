@@ -24,7 +24,19 @@ export default function ReportEditor({ reportId, onBack }) {
   const [toast, setToast] = useState(null)
   const saveTimer = useRef(null)
 
-  // Load from Supabase if editing existing
+  // Pre-fill from URL params helper
+  function prefillFromParams(params) {
+    const fields = { customer:'customer', projName:'projName', projNo:'projNo', poNo:'poNo', date:'date', supplier:'supplier', place:'place', item:'item' }
+    Object.entries(fields).forEach(([param, key]) => {
+      const val = params.get(param)
+      if (val) setProj(p => ({ ...p, [key]: decodeURIComponent(val) }))
+    })
+    const rt = params.get('rptType')
+    if (rt === 'witness') setRptType('witness')
+    else if (rt === 'internal') setRptType('internal')
+  }
+
+  // Load from Supabase if editing existing, otherwise pre-fill from URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const urlId = params.get('reportId')
@@ -33,26 +45,29 @@ export default function ReportEditor({ reportId, onBack }) {
     if (loadId) {
       setCurrentId(loadId)
       setLoading(true)
-      supabase.from('qap_reports').select('*').eq('id', loadId).single().then(({ data }) => {
-        if (data && data.data) {
+      supabase.from('qap_reports').select('*').eq('id', loadId).single().then(({ data, error }) => {
+        if (data && data.data && !error) {
+          // Existing report found in Supabase — load it
           const d = data.data
           if (d.proj) setProj(d.proj)
           if (d.sections) setSections(d.sections)
           if (d.rptType) setRptType(d.rptType)
           if (d.status) setStatus(d.status)
           if (d.step) setStep(d.step)
+        } else {
+          // Report ID present but NOT found in Supabase (new report from Subtle OS)
+          // Pre-fill from URL params
+          prefillFromParams(params)
         }
+        setLoading(false)
+      }).catch(() => {
+        // Supabase error — still try to pre-fill from URL params
+        prefillFromParams(params)
         setLoading(false)
       })
     } else {
-      // Pre-fill from URL params (Subtle OS integration)
-      const fields = { customer:'customer', projName:'projName', projNo:'projNo', poNo:'poNo', date:'date', supplier:'supplier', place:'place', item:'item' }
-      let filled = false
-      Object.entries(fields).forEach(([param, key]) => {
-        const val = params.get(param)
-        if (val) { setProj(p => ({ ...p, [key]: decodeURIComponent(val) })); filled = true }
-      })
-      if (params.get('rptType') === 'witness') setRptType('witness')
+      // No report ID at all — pre-fill from URL params (Subtle OS integration)
+      prefillFromParams(params)
     }
   }, [reportId])
 
