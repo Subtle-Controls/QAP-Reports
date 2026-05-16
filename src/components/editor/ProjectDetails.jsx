@@ -12,6 +12,7 @@ export default function ProjectDetails({ proj, setProj, rptType, setRptType, set
         <div className="ed-rtype-group">
           <button type="button" className={`ed-rtype-btn ${rptType === 'internal' ? 'sel' : ''}`} onClick={() => setRptType('internal')}>Internal Test Report</button>
           <button type="button" className={`ed-rtype-btn ${rptType === 'witness' ? 'sel' : ''}`} onClick={() => setRptType('witness')}>Witness Report</button>
+          <button type="button" className={`ed-rtype-btn ${rptType === 'checklist' ? 'sel' : ''}`} onClick={() => setRptType('checklist')}>Panel Testing Checklist</button>
         </div>
       </div>
 

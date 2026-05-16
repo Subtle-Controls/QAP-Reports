@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../lib/supabase.js'
 import { uid } from './editor/helpers'
-import { buildDefaultSections } from './editor/defaultSections'
+import { buildDefaultSections, buildChecklistSections } from './editor/defaultSections'
 import Stepper from './editor/Stepper'
 import ProjectDetails from './editor/ProjectDetails'
 import SectionSetup from './editor/SectionSetup'
@@ -33,6 +33,7 @@ export default function ReportEditor({ reportId, onBack }) {
     })
     const rt = params.get('rptType')
     if (rt === 'witness') setRptType('witness')
+    else if (rt === 'checklist') { setRptType('checklist'); setSections(buildChecklistSections()) }
     else if (rt === 'internal') setRptType('internal')
   }
 
@@ -81,7 +82,7 @@ export default function ReportEditor({ reportId, onBack }) {
         project_no: proj.projNo || '',
         project_name: proj.projName || '',
         customer: proj.customer || '',
-        report_type: rptType === 'witness' ? 'Witness Report' : 'Internal Test Report',
+        report_type: rptType === 'witness' ? 'Witness Report' : rptType === 'checklist' ? 'Panel Testing Checklist' : 'Internal Test Report',
         status: status,
         data: { proj, sections, rptType, status, step, reportId: currentId },
         updated_at: new Date().toISOString()
@@ -103,7 +104,7 @@ export default function ReportEditor({ reportId, onBack }) {
       project_no: proj.projNo || '',
       project_name: proj.projName || '',
       customer: proj.customer || '',
-      report_type: rptType === 'witness' ? 'Witness Report' : 'Internal Test Report',
+      report_type: rptType === 'witness' ? 'Witness Report' : rptType === 'checklist' ? 'Panel Testing Checklist' : 'Internal Test Report',
       status: status,
       data: { proj, sections, rptType, status, step, reportId: currentId },
       updated_at: new Date().toISOString()
