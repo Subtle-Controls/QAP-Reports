@@ -23,10 +23,10 @@ export default function GenerateReport({ sections, proj, rptType, setStep }) {
           <div className="ed-gen-icon">📄</div>
           <div className="ed-gen-text">
             <h3>Ready to Generate Report</h3>
-            <p>Report type: <strong style={{ color: '#7fffc4' }}>{rptType === 'witness' ? 'Witness Report' : 'Internal Test Report'}</strong></p>
+            <p>Report type: <strong style={{ color: '#7fffc4' }}>{rptType === 'witness' ? 'Witness Report' : rptType === 'checklist' ? 'Panel Testing Checklist' : 'Internal Test Report'}</strong></p>
           </div>
           <div className="ed-gen-acts">
-            <button className="ed-btn ed-btn-outline" onClick={handlePrint}>🖨 Print</button>
+            <button className="ed-btn ed-btn-outline" style={{background:'#fff',color:'var(--navy)',borderColor:'#fff'}} onClick={handlePrint}>🖨 Print</button>
             <button className="ed-btn ed-btn-green" onClick={() => setShowPreview(true)}>📄 Generate & Preview</button>
           </div>
         </div>

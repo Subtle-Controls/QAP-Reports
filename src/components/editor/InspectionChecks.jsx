@@ -3,13 +3,17 @@ import { uid, createParam, countParams, countFilled } from './helpers'
 import ProgressBar from './ProgressBar'
 
 export default function InspectionChecks({ sections, setSections, setStep }) {
-  const [activeIdx, setActiveIdx] = useState(0)
+  // Only work with enabled sections
+  const enabledSections = sections.map((s, i) => ({ ...s, _origIdx: i })).filter(s => s.enabled)
+  const [activePos, setActivePos] = useState(0)
   const [showParamModal, setShowParamModal] = useState(false)
   const [paramTarget, setParamTarget] = useState(null)
   const [newParamDesc, setNewParamDesc] = useState('')
 
+  const current = enabledSections[activePos]
+  const activeIdx = current ? current._origIdx : 0
   const sec = sections[activeIdx]
-  if (!sec) return <div>No sections available</div>
+  if (!sec) return <div>No sections enabled. Go back to Section Setup and enable at least one.</div>
 
   function updateParam(secIdx, groupKey, paramIdx, field, value) {
     setSections(prev => {
@@ -103,12 +107,12 @@ export default function InspectionChecks({ sections, setSections, setStep }) {
       {/* Sidebar */}
       <div className="ed-checks-sidebar">
         <div className="ed-sb-label">SECTIONS</div>
-        {sections.map((s, i) => {
+        {enabledSections.map((s, i) => {
           const filled = countFilled(s)
           const total = countParams(s)
-          const done = s.enabled && filled > 0 && filled === total
+          const done = filled > 0 && filled === total
           return (
-            <div key={s.id} className={`ed-sb-item ${i === activeIdx ? 'active' : ''} ${done ? 'done' : ''} ${!s.enabled ? 'off' : ''}`} onClick={() => setActiveIdx(i)}>
+            <div key={s.id} className={`ed-sb-item ${i === activePos ? 'active' : ''} ${done ? 'done' : ''}`} onClick={() => setActivePos(i)}>
               <div className="ed-sb-dot" />
               <span className="ed-sb-name">{s.title}</span>
             </div>
@@ -148,9 +152,9 @@ export default function InspectionChecks({ sections, setSections, setStep }) {
           <div className="ed-card-foot" style={{ justifyContent: 'space-between' }}>
             <div style={{ fontSize: 11, color: 'var(--text-3)' }}>Filled: {countFilled(sec)}/{countParams(sec)}</div>
             <div style={{ display: 'flex', gap: 8 }}>
-              {activeIdx > 0 && <button className="ed-btn ed-btn-outline" onClick={() => setActiveIdx(activeIdx - 1)}>‹ Prev</button>}
-              {activeIdx < sections.length - 1 ? (
-                <button className="ed-btn ed-btn-navy" onClick={() => setActiveIdx(activeIdx + 1)}>Next Section ›</button>
+              {activePos > 0 && <button className="ed-btn ed-btn-outline" onClick={() => setActivePos(activePos - 1)}>‹ Prev</button>}
+              {activePos < enabledSections.length - 1 ? (
+                <button className="ed-btn ed-btn-navy" onClick={() => setActivePos(activePos + 1)}>Next Section ›</button>
               ) : (
                 <button className="ed-btn ed-btn-navy" onClick={() => setStep(4)}>Finish Checks ›</button>
               )}

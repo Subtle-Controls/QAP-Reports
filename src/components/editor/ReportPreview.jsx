@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function ReportPreview({ sections, proj, rptType, onClose }) {
-  const rLabel = rptType === 'witness' ? 'WITNESS REPORT' : 'INTERNAL TEST REPORT'
+  const rLabel = rptType === 'witness' ? 'WITNESS REPORT' : rptType === 'checklist' ? 'PANEL TESTING CHECKLIST' : 'INTERNAL TEST REPORT'
   const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
   const rptNo = proj.reportNo || ('SC/' + (proj.projNo || 'XXXX') + '/QAP/' + new Date().getFullYear())
   const enabled = sections.filter(s => s.enabled)
@@ -34,8 +34,8 @@ export default function ReportPreview({ sections, proj, rptType, onClose }) {
   return (
     <div className="rpt-overlay" id="rpt-overlay">
       <div className="rpt-toolbar no-print">
-        <button className="ed-btn ed-btn-outline" onClick={onClose}>✕ Close</button>
-        <button className="ed-btn ed-btn-green" onClick={() => window.print()}>🖨 Print / PDF</button>
+        <button className="ed-btn ed-btn-outline" style={{background:'#fff',color:'var(--text)',boxShadow:'0 2px 8px rgba(0,0,0,.2)'}} onClick={onClose}>✕ Close</button>
+        <button className="ed-btn ed-btn-green" style={{boxShadow:'0 2px 8px rgba(5,150,105,.3)'}} onClick={() => window.print()}>🖨 Print / PDF</button>
       </div>
       <div className="rpt-doc">
         {/* Header */}
