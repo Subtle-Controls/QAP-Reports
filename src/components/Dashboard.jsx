@@ -18,17 +18,19 @@ export default function Dashboard({ editReport }) {
         .select('*')
         .order('updated_at', { ascending: false })
 
-      if (error) throw error
+      if (error) { console.error('[QAP] Dashboard fetch error:', error.message); throw error }
+      console.log(`[QAP] Fetched ${reports?.length || 0} reports from Supabase`)
 
-      const total = reports.length
-      const inProgress = reports.filter(r => r.status === 'In Progress').length
-      const completed = reports.filter(r => r.status === 'Completed').length
-      const customers = new Set(reports.map(r => r.customer).filter(Boolean)).size
+      const all = reports || []
+      const total = all.length
+      const inProgress = all.filter(r => r.status === 'inprogress' || r.status === 'In Progress').length
+      const completed = all.filter(r => r.status === 'completed' || r.status === 'Completed').length
+      const customers = new Set(all.map(r => r.customer).filter(Boolean)).size
 
       setStats({ total, inProgress, completed, customers })
-      setRecentReports(reports.slice(0, 5))
+      setRecentReports(all.slice(0, 5))
     } catch (err) {
-      console.error('Error fetching dashboard data:', err)
+      console.error('[QAP] Error fetching dashboard data:', err)
     } finally {
       setLoading(false)
     }
@@ -84,8 +86,8 @@ export default function Dashboard({ editReport }) {
                   <td>{report.project_name || '—'}</td>
                   <td>{report.customer || '—'}</td>
                   <td>
-                    <span className={`status-badge ${report.status === 'Completed' ? 'status-completed' : 'status-progress'}`}>
-                      {report.status || 'In Progress'}
+                    <span className={`status-badge ${report.status === 'completed' || report.status === 'Completed' ? 'status-completed' : 'status-progress'}`}>
+                      {report.status === 'completed' || report.status === 'Completed' ? 'Completed' : 'In Progress'}
                     </span>
                   </td>
                   <td>{report.updated_at ? new Date(report.updated_at).toLocaleDateString() : '—'}</td>
