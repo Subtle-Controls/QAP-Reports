@@ -25,13 +25,28 @@ export default function ReportEditor({ reportId, onBack }) {
   const saveTimer = useRef(null)
 
   // Pre-fill from URL params helper
+  // Auto-generate report number from project number
+  function generateReportNo(projNo, rptType) {
+    const prefix = projNo ? `SC/${projNo}/QAP` : 'SC/QAP'
+    const year = new Date().getFullYear()
+    const seq = String(Math.floor(Math.random() * 900 + 100))
+    const typeCode = rptType === 'witness' ? 'W' : rptType === 'checklist' ? 'C' : 'I'
+    return `${prefix}/${typeCode}-${seq}/${year}`
+  }
+
   function prefillFromParams(params) {
     const fields = { customer:'customer', projName:'projName', projNo:'projNo', poNo:'poNo', date:'date', supplier:'supplier', place:'place', item:'item' }
+    const updates = {}
     Object.entries(fields).forEach(([param, key]) => {
       const val = params.get(param)
-      if (val) setProj(p => ({ ...p, [key]: decodeURIComponent(val) }))
+      if (val) updates[key] = decodeURIComponent(val)
     })
-    const rt = params.get('rptType')
+    const rt = params.get('rptType') || 'internal'
+    // Auto-generate report number
+    if (!updates.reportNo && updates.projNo) {
+      updates.reportNo = generateReportNo(updates.projNo, rt)
+    }
+    if (Object.keys(updates).length > 0) setProj(p => ({ ...p, ...updates }))
     if (rt === 'witness') setRptType('witness')
     else if (rt === 'checklist') { setRptType('checklist'); setSections(buildChecklistSections()) }
     else if (rt === 'internal') setRptType('internal')

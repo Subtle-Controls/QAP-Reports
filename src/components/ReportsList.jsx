@@ -118,6 +118,7 @@ export default function ReportsList({ editReport }) {
               <tr>
                 <th>Report Type</th>
                 <th>Project Name</th>
+                <th>Panel / Item</th>
                 <th>Customer</th>
                 <th>Status</th>
                 <th>Last Updated</th>
@@ -129,10 +130,11 @@ export default function ReportsList({ editReport }) {
                 <tr key={report.id}>
                   <td>{report.report_type || 'Internal Test Report'}</td>
                   <td>{report.project_name || '—'}</td>
+                  <td style={{fontWeight:500}}>{report.data?.proj?.item || '—'}</td>
                   <td>{report.customer || '—'}</td>
                   <td>
-                    <span className={`status-badge ${report.status === 'Completed' ? 'status-completed' : 'status-progress'}`}>
-                      {report.status || 'In Progress'}
+                    <span className={`status-badge ${report.status === 'completed' || report.status === 'Completed' ? 'status-completed' : 'status-progress'}`}>
+                      {report.status === 'completed' || report.status === 'Completed' ? 'Completed' : 'In Progress'}
                     </span>
                   </td>
                   <td>{report.updated_at ? new Date(report.updated_at).toLocaleDateString() : '—'}</td>
