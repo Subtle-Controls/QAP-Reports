@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { supabase } from '../../lib/supabase.js'
 import { uid } from './helpers'
 
 export default function TemplateManager({ sections, onLoadTemplate, onClose }) {
@@ -12,28 +13,48 @@ export default function TemplateManager({ sections, onLoadTemplate, onClose }) {
 
   async function fetchTemplates() {
     setLoading(true)
-    // Store templates in localStorage for now
     try {
+      // Fetch from Supabase first
+      const { data, error } = await supabase.from('qap_templates').select('*').order('created_at', { ascending: false })
+      if (!error && data && data.length > 0) {
+        const tpls = data.map(row => row.data || row)
+        setTemplates(tpls)
+        // Also cache in localStorage
+        localStorage.setItem('qap_templates', JSON.stringify(tpls))
+      } else {
+        // Fallback to localStorage
+        const saved = JSON.parse(localStorage.getItem('qap_templates') || '[]')
+        setTemplates(saved)
+      }
+    } catch {
       const saved = JSON.parse(localStorage.getItem('qap_templates') || '[]')
       setTemplates(saved)
-    } catch { setTemplates([]) }
+    }
     setLoading(false)
   }
 
-  function saveTemplate() {
+  async function saveTemplate() {
     if (!saveName.trim()) return
     const tpl = { id: uid(), name: saveName.trim(), description: saveDesc.trim(), sections: JSON.parse(JSON.stringify(sections)), createdAt: new Date().toISOString() }
     const all = [...templates, tpl]
     localStorage.setItem('qap_templates', JSON.stringify(all))
     setTemplates(all)
+    // Save to Supabase
+    supabase.from('qap_templates').upsert({ id: tpl.id, data: tpl, name: tpl.name, created_at: tpl.createdAt }, { onConflict: 'id' }).then(({ error }) => {
+      if (error) console.warn('[QAP] Template save error:', error.message)
+    })
     setSaveName(''); setSaveDesc(''); setShowSave(false)
   }
 
-  function deleteTemplate(id) {
+  async function deleteTemplate(id) {
     if (!confirm('Delete this template?')) return
     const all = templates.filter(t => t.id !== id)
     localStorage.setItem('qap_templates', JSON.stringify(all))
     setTemplates(all)
+    // Delete from Supabase
+    supabase.from('qap_templates').delete().eq('id', id).then(({ error }) => {
+      if (error) console.warn('[QAP] Template delete error:', error.message)
+    })
   }
 
   function loadTemplate(tpl) {
