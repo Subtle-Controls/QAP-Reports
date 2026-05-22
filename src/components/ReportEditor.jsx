@@ -11,7 +11,7 @@ import GenerateReport from './editor/GenerateReport'
 import TemplateManager from './editor/Templates'
 
 function blankProj() {
-  return { customer:'', projName:'', reportNo:'', projNo:'', poNo:'', date:'', supplier:'Subtle Controls I Pvt Ltd', place:'', item:'', drawing:'', refDocs:'', units:'', unit1sn:'', unit2sn:'', conclusion:'', inspName:'', inspDesig:'', inspDate:'', revName:'', revDesig:'', revDate:'', signatureImg:'', stampImg:'' }
+  return { customer:'', projName:'', reportNo:'', projNo:'', poNo:'', date:'', supplier:'Subtle Controls I Pvt Ltd', place:'', item:'', drawing:'', refDocs:'', units:'', unit1sn:'', unit2sn:'', conclusion:'', inspName:'', inspDesig:'', inspDate:'', revName:'', revDesig:'', revDate:'', inspSignatureImg:'', inspStampImg:'', revSignatureImg:'', revStampImg:'' }
 }
 
 export default function ReportEditor({ reportId, onBack }) {
