@@ -82,10 +82,14 @@ export default function ReportPreview({ sections, proj, rptType, onClose }) {
           <div className="rpt-sign-box">
             <h4>Product Inspected By</h4>
             <table><tbody><tr><td>Name:</td><td><b>{proj.inspName}</b></td></tr><tr><td>Designation:</td><td>{proj.inspDesig}</td></tr><tr><td>Date:</td><td>{proj.inspDate}</td></tr></tbody></table>
+            {proj.signatureImg && <div style={{marginTop:8}}><img src={proj.signatureImg} alt="Signature" style={{maxWidth:150,maxHeight:60,objectFit:'contain'}} /></div>}
+            {proj.stampImg && <div style={{marginTop:6}}><img src={proj.stampImg} alt="Stamp" style={{maxWidth:100,maxHeight:60,objectFit:'contain'}} /></div>}
           </div>
           <div className="rpt-sign-box">
             <h4>Report Reviewed By</h4>
             <table><tbody><tr><td>Name:</td><td><b>{proj.revName}</b></td></tr><tr><td>Designation:</td><td>{proj.revDesig}</td></tr><tr><td>Date:</td><td>{proj.revDate}</td></tr></tbody></table>
+            {proj.signatureImg && <div style={{marginTop:8}}><img src={proj.signatureImg} alt="Signature" style={{maxWidth:150,maxHeight:60,objectFit:'contain'}} /></div>}
+            {proj.stampImg && <div style={{marginTop:6}}><img src={proj.stampImg} alt="Stamp" style={{maxWidth:100,maxHeight:60,objectFit:'contain'}} /></div>}
           </div>
         </div>
 

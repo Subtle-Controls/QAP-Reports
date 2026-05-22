@@ -8,9 +8,10 @@ import SectionSetup from './editor/SectionSetup'
 import InspectionChecks from './editor/InspectionChecks'
 import ConclusionSignoff from './editor/ConclusionSignoff'
 import GenerateReport from './editor/GenerateReport'
+import TemplateManager from './editor/Templates'
 
 function blankProj() {
-  return { customer:'', projName:'', reportNo:'', projNo:'', poNo:'', date:'', supplier:'Subtle Controls I Pvt Ltd', place:'', item:'', drawing:'', refDocs:'', units:'', unit1sn:'', unit2sn:'', conclusion:'', inspName:'', inspDesig:'', inspDate:'', revName:'', revDesig:'', revDate:'' }
+  return { customer:'', projName:'', reportNo:'', projNo:'', poNo:'', date:'', supplier:'Subtle Controls I Pvt Ltd', place:'', item:'', drawing:'', refDocs:'', units:'', unit1sn:'', unit2sn:'', conclusion:'', inspName:'', inspDesig:'', inspDate:'', revName:'', revDesig:'', revDate:'', signatureImg:'', stampImg:'' }
 }
 
 export default function ReportEditor({ reportId, onBack }) {
@@ -22,6 +23,7 @@ export default function ReportEditor({ reportId, onBack }) {
   const [sections, setSections] = useState(() => buildDefaultSections())
   const [currentId, setCurrentId] = useState(reportId || ('qap_' + uid()))
   const [toast, setToast] = useState(null)
+  const [showTemplates, setShowTemplates] = useState(false)
   const saveTimer = useRef(null)
 
   // Pre-fill from URL params helper
@@ -131,6 +133,37 @@ export default function ReportEditor({ reportId, onBack }) {
     })
   }
 
+  // Load JSON handler
+  function handleLoadJSON(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result)
+        if (data.proj) setProj(p => ({...p, ...data.proj}))
+        if (data.sections) setSections(data.sections)
+        if (data.rptType) setRptType(data.rptType)
+        if (data.status) setStatus(data.status)
+        if (data.step) setStep(data.step)
+        setToast('✓ Report loaded from JSON')
+        setTimeout(() => setToast(null), 3000)
+      } catch(err) { alert('Invalid JSON file: ' + err.message) }
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
+
+  // Export JSON handler
+  function handleExportJSON() {
+    const data = { proj, sections, rptType, status, step, reportId: currentId }
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'})
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url; a.download = `QAP_${proj.projNo||'report'}_${Date.now()}.json`
+    a.click(); URL.revokeObjectURL(url)
+  }
+
   if (loading) return <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-3)' }}>Loading report...</div>
 
   return (
@@ -146,6 +179,12 @@ export default function ReportEditor({ reportId, onBack }) {
           <option value="completed">Completed</option>
         </select>
         <button className="ed-btn ed-btn-green" onClick={handleSave}>💾 Save Report</button>
+        <label className="ed-btn ed-btn-outline" style={{cursor:'pointer'}}>
+          📂 Load JSON
+          <input type="file" accept=".json" style={{display:'none'}} onChange={handleLoadJSON} />
+        </label>
+        <button className="ed-btn ed-btn-outline" onClick={handleExportJSON}>💾 Export JSON</button>
+        <button className="ed-btn ed-btn-outline" onClick={()=>setShowTemplates(true)}>📋 Templates</button>
       </div>
 
       <Stepper step={step} setStep={setStep} />
@@ -157,6 +196,8 @@ export default function ReportEditor({ reportId, onBack }) {
         {step === 4 && <ConclusionSignoff proj={proj} setProj={setProj} setStep={setStep} />}
         {step === 5 && <GenerateReport sections={sections} proj={proj} rptType={rptType} setStep={setStep} />}
       </div>
+
+      {showTemplates && <TemplateManager sections={sections} onLoadTemplate={(s)=>setSections(s)} onClose={()=>setShowTemplates(false)} />}
     </div>
   )
 }
