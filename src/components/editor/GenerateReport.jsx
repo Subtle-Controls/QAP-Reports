@@ -1,17 +1,18 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { countByStatus } from './helpers'
 import ReportPreview from './ReportPreview'
 
 export default function GenerateReport({ sections, proj, rptType, setStep }) {
   const [showPreview, setShowPreview] = useState(false)
+  const [autoPrint, setAutoPrint] = useState(false)
   const stats = countByStatus(sections)
   const enabled = sections.filter(s => s.enabled)
   const disabled = sections.filter(s => !s.enabled)
   const blank = stats.total - stats.filled
 
   function handlePrint() {
+    setAutoPrint(true)
     setShowPreview(true)
-    setTimeout(() => window.print(), 500)
   }
 
   return (
@@ -49,7 +50,7 @@ export default function GenerateReport({ sections, proj, rptType, setStep }) {
         <div className="ed-card-foot"><button className="ed-btn ed-btn-outline" onClick={() => setStep(4)}>‹ Back to Sign-off</button></div>
       </div>
 
-      {showPreview && <ReportPreview sections={sections} proj={proj} rptType={rptType} onClose={() => setShowPreview(false)} />}
+      {showPreview && <ReportPreview sections={sections} proj={proj} rptType={rptType} autoPrint={autoPrint} onClose={() => { setShowPreview(false); setAutoPrint(false) }} />}
     </>
   )
 }

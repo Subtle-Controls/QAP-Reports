@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-export default function ReportPreview({ sections, proj, rptType, onClose }) {
+export default function ReportPreview({ sections, proj, rptType, onClose, autoPrint }) {
+  useEffect(() => {
+    if (autoPrint) {
+      const t = setTimeout(() => window.print(), 300)
+      return () => clearTimeout(t)
+    }
+  }, [autoPrint])
   const rLabel = rptType === 'witness' ? 'WITNESS REPORT' : rptType === 'checklist' ? 'PANEL TESTING CHECKLIST' : 'INTERNAL TEST REPORT'
   const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
   const rptNo = proj.reportNo || ('SC/' + (proj.projNo || 'XXXX') + '/QAP/' + new Date().getFullYear())
