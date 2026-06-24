@@ -15,7 +15,7 @@ export default function ReportPreview({ sections, proj, rptType, onClose, autoPr
   function renderParams(params, secNo) {
     return (
       <table className="rpt-tbl">
-        <thead><tr><th>S/N</th><th>Parameter</th><th>Status</th><th>Value</th><th>Remarks</th></tr></thead>
+        <thead><tr><th>S/N</th><th>Parameter</th><th>Design</th><th>Actual</th><th>Remarks</th><th>Status</th></tr></thead>
         <tbody>
           {params.map((p, i) => {
             const st = !p.appl ? 'N/A' : p.status === 'ok' ? 'OK' : p.status === 'notok' ? 'NOT OK' : p.status === 'na' ? 'N/A' : '—'
@@ -24,9 +24,10 @@ export default function ReportPreview({ sections, proj, rptType, onClose, autoPr
               <tr key={p.id} className={cls}>
                 <td className="rpt-sn">{secNo}.{String(i + 1).padStart(2, '0')}</td>
                 <td>{p.desc}</td>
-                <td><span className={`rpt-st rpt-st-${p.status || 'na'}`}>{st}</span></td>
+                <td>{p.design || '—'}</td>
                 <td>{p.value || '—'}</td>
                 <td>{p.remarks || ''}</td>
+                <td><span className={`rpt-st rpt-st-${p.status || 'na'}`}>{st}</span></td>
               </tr>
             )
           })}

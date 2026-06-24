@@ -69,18 +69,21 @@ export default function InspectionChecks({ sections, setSections, setStep }) {
     return (
       <div className="ed-tbl-wrap">
         <table className="ed-ptbl">
-          <thead><tr><th>S/N</th><th>Parameter Description</th><th>Appl.</th><th>Status</th><th>Value</th><th>Remarks</th><th></th></tr></thead>
+          <thead><tr><th>S/N</th><th>Parameter Description</th><th>Appl.</th><th>Design</th><th>Actual</th><th>Remarks</th><th>Status</th><th></th></tr></thead>
           <tbody>
             {params.map((param, pi) => (
               <tr key={param.id} className={!param.appl ? 'na-row' : ''}>
                 <td className="ed-sn">{secIdx + 1}.{String(pi + 1).padStart(2, '0')}</td>
-                <td className="ed-pd">{param.desc}</td>
+                <td className="ed-pd"><input className="ed-pv" value={param.desc} onChange={e => updateParam(secIdx, groupKey, pi, 'desc', e.target.value)} placeholder="Parameter..." style={{fontWeight:600}} /></td>
                 <td>
                   <div className="ed-appl">
                     <button className={`ed-abtn ${param.appl ? 'ay' : ''}`} onClick={() => updateParam(secIdx, groupKey, pi, 'appl', true)}>Appl</button>
                     <button className={`ed-abtn ${!param.appl ? 'an' : ''}`} onClick={() => updateParam(secIdx, groupKey, pi, 'appl', false)}>N/A</button>
                   </div>
                 </td>
+                <td><input className="ed-pv" value={param.design||''} disabled={!param.appl} onChange={e => updateParam(secIdx, groupKey, pi, 'design', e.target.value)} placeholder="Design..." /></td>
+                <td><input className="ed-pv" value={param.value} disabled={!param.appl} onChange={e => updateParam(secIdx, groupKey, pi, 'value', e.target.value)} placeholder="Actual..." /></td>
+                <td><input className="ed-pv" value={param.remarks} onChange={e => updateParam(secIdx, groupKey, pi, 'remarks', e.target.value)} placeholder="Remarks..." /></td>
                 <td>
                   <select className={`ed-pst ${param.status}`} value={param.status} disabled={!param.appl}
                     onChange={e => updateParam(secIdx, groupKey, pi, 'status', e.target.value)}>
@@ -90,8 +93,6 @@ export default function InspectionChecks({ sections, setSections, setStep }) {
                     <option value="na">— N/A</option>
                   </select>
                 </td>
-                <td><input className="ed-pv" value={param.value} disabled={!param.appl} onChange={e => updateParam(secIdx, groupKey, pi, 'value', e.target.value)} placeholder="Value..." /></td>
-                <td><input className="ed-pv" value={param.remarks} onChange={e => updateParam(secIdx, groupKey, pi, 'remarks', e.target.value)} placeholder="Remarks..." /></td>
                 <td><button className="ed-del-btn" onClick={() => deleteParam(secIdx, groupKey, pi)}>×</button></td>
               </tr>
             ))}

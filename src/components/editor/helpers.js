@@ -4,7 +4,7 @@ export function uid() {
 }
 
 export function createParam(desc) {
-  return { id: uid(), desc, appl: true, status: '', value: '', remarks: '' }
+  return { id: uid(), desc, appl: true, status: '', value: '', design: '', remarks: '' }
 }
 
 export function countParams(section) {
