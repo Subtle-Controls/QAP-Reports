@@ -26,7 +26,7 @@ export default function ConclusionSignoff({ proj, setProj, setStep }) {
 
       <div className="ed-sign-grid">
         <div className="ed-sign-box">
-          <h4>Product Tested By</h4>
+          <h4>Tested By</h4>
           <div className="ed-fg"><label>Name</label><input value={proj.testName||''} onChange={e => sf('testName', e.target.value)} placeholder="Full Name" /></div>
           <div className="ed-fg"><label>Designation</label><input value={proj.testDesig||''} onChange={e => sf('testDesig', e.target.value)} placeholder="e.g. Test Engineer" /></div>
           <div className="ed-fg"><label>Date</label><input type="date" value={proj.testDate||''} onChange={e => sf('testDate', e.target.value)} /></div>
