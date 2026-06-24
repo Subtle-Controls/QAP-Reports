@@ -26,6 +26,12 @@ export default function ConclusionSignoff({ proj, setProj, setStep }) {
 
       <div className="ed-sign-grid">
         <div className="ed-sign-box">
+          <h4>Product Tested By</h4>
+          <div className="ed-fg"><label>Name</label><input value={proj.testName||''} onChange={e => sf('testName', e.target.value)} placeholder="Full Name" /></div>
+          <div className="ed-fg"><label>Designation</label><input value={proj.testDesig||''} onChange={e => sf('testDesig', e.target.value)} placeholder="e.g. Test Engineer" /></div>
+          <div className="ed-fg"><label>Date</label><input type="date" value={proj.testDate||''} onChange={e => sf('testDate', e.target.value)} /></div>
+        </div>
+        <div className="ed-sign-box">
           <h4>Product Inspected By</h4>
           <div className="ed-fg"><label>Name</label><input value={proj.inspName} onChange={e => sf('inspName', e.target.value)} placeholder="Full Name" /></div>
           <div className="ed-fg"><label>Designation</label><input value={proj.inspDesig} onChange={e => sf('inspDesig', e.target.value)} placeholder="e.g. QA Engineer" /></div>
@@ -36,12 +42,46 @@ export default function ConclusionSignoff({ proj, setProj, setStep }) {
             <select value={proj.revType || 'reviewed'} onChange={e => sf('revType', e.target.value)} style={{font:'inherit',fontWeight:700,fontSize:'inherit',color:'inherit',border:'none',background:'transparent',cursor:'pointer',padding:0,appearance:'none',WebkitAppearance:'none'}}>
               <option value="reviewed" style={{color:'#000',background:'#fff'}}>Report Reviewed By</option>
               <option value="witnessed" style={{color:'#000',background:'#fff'}}>Report Witnessed By</option>
+              <option value="virtually_witnessed" style={{color:'#000',background:'#fff'}}>Product Virtually Witnessed By</option>
             </select>
             <span style={{fontSize:10,marginLeft:6,opacity:0.6}}>▼</span>
           </h4>
           <div className="ed-fg"><label>Name</label><input value={proj.revName} onChange={e => sf('revName', e.target.value)} placeholder="Full Name" /></div>
           <div className="ed-fg"><label>Designation</label><input value={proj.revDesig} onChange={e => sf('revDesig', e.target.value)} placeholder="e.g. QA Manager" /></div>
           <div className="ed-fg"><label>Date</label><input type="date" value={proj.revDate} onChange={e => sf('revDate', e.target.value)} /></div>
+        </div>
+      </div>
+
+      {/* Tested By — Signature & Stamp Upload */}
+      <div style={{ padding: '0 16px 16px' }}>
+        <label style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-2)', marginBottom: 8, display: 'block' }}>Tested By — Signature & Stamp</label>
+        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 6, display: 'block' }}>Signature</label>
+            <label className="ed-btn ed-btn-outline" style={{ cursor: 'pointer', display: 'inline-block', marginBottom: 8 }}>
+              📎 Upload Signature
+              <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload('testSignatureImg')} />
+            </label>
+            {proj.testSignatureImg && (
+              <div style={{ marginTop: 8 }}>
+                <img src={proj.testSignatureImg} alt="Tester Signature" style={{ maxWidth: 200, maxHeight: 80, border: '1px solid var(--border)', borderRadius: 6, padding: 4, background: '#fff' }} />
+                <button className="ed-btn ed-btn-outline" style={{ fontSize: 10, padding: '2px 8px', marginLeft: 8, color: '#dc2626' }} onClick={() => sf('testSignatureImg', '')}>Remove</button>
+              </div>
+            )}
+          </div>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 6, display: 'block' }}>Company Stamp</label>
+            <label className="ed-btn ed-btn-outline" style={{ cursor: 'pointer', display: 'inline-block', marginBottom: 8 }}>
+              📎 Upload Stamp
+              <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload('testStampImg')} />
+            </label>
+            {proj.testStampImg && (
+              <div style={{ marginTop: 8 }}>
+                <img src={proj.testStampImg} alt="Tester Stamp" style={{ maxWidth: 200, maxHeight: 80, border: '1px solid var(--border)', borderRadius: 6, padding: 4, background: '#fff' }} />
+                <button className="ed-btn ed-btn-outline" style={{ fontSize: 10, padding: '2px 8px', marginLeft: 8, color: '#dc2626' }} onClick={() => sf('testStampImg', '')}>Remove</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

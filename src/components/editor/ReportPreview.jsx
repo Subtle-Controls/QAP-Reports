@@ -87,6 +87,14 @@ export default function ReportPreview({ sections, proj, rptType, onClose, autoPr
         {/* Sign-off */}
         <div className="rpt-sign">
           <div className="rpt-sign-box">
+            <h4>Product Tested By</h4>
+            <table><tbody><tr><td>Name:</td><td><b>{proj.testName}</b></td></tr><tr><td>Designation:</td><td>{proj.testDesig}</td></tr><tr><td>Date:</td><td>{proj.testDate}</td></tr></tbody></table>
+            <div style={{display:'flex',gap:12,marginTop:8,alignItems:'center'}}>
+              {proj.testSignatureImg && <img src={proj.testSignatureImg} alt="Tester Signature" style={{maxWidth:150,maxHeight:60,objectFit:'contain'}} />}
+              {proj.testStampImg && <img src={proj.testStampImg} alt="Tester Stamp" style={{maxWidth:100,maxHeight:60,objectFit:'contain'}} />}
+            </div>
+          </div>
+          <div className="rpt-sign-box">
             <h4>Product Inspected By</h4>
             <table><tbody><tr><td>Name:</td><td><b>{proj.inspName}</b></td></tr><tr><td>Designation:</td><td>{proj.inspDesig}</td></tr><tr><td>Date:</td><td>{proj.inspDate}</td></tr></tbody></table>
             <div style={{display:'flex',gap:12,marginTop:8,alignItems:'center'}}>
@@ -95,7 +103,7 @@ export default function ReportPreview({ sections, proj, rptType, onClose, autoPr
             </div>
           </div>
           <div className="rpt-sign-box">
-            <h4>{proj.revType === 'witnessed' ? 'Report Witnessed By' : 'Report Reviewed By'}</h4>
+            <h4>{proj.revType === 'witnessed' ? 'Report Witnessed By' : proj.revType === 'virtually_witnessed' ? 'Product Virtually Witnessed By' : 'Report Reviewed By'}</h4>
             <table><tbody><tr><td>Name:</td><td><b>{proj.revName}</b></td></tr><tr><td>Designation:</td><td>{proj.revDesig}</td></tr><tr><td>Date:</td><td>{proj.revDate}</td></tr></tbody></table>
             <div style={{display:'flex',gap:12,marginTop:8,alignItems:'center'}}>
               {proj.revSignatureImg && <img src={proj.revSignatureImg} alt="Reviewer Signature" style={{maxWidth:150,maxHeight:60,objectFit:'contain'}} />}
