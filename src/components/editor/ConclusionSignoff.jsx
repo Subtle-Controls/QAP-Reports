@@ -33,10 +33,11 @@ export default function ConclusionSignoff({ proj, setProj, setStep }) {
         </div>
         <div className="ed-sign-box">
           <h4>
-            <select value={proj.revType || 'reviewed'} onChange={e => sf('revType', e.target.value)} style={{font:'inherit',fontWeight:700,border:'1px solid var(--border)',borderRadius:6,padding:'4px 8px',background:'var(--bg)',cursor:'pointer'}}>
-              <option value="reviewed">Report Reviewed By</option>
-              <option value="witnessed">Report Witnessed By</option>
+            <select value={proj.revType || 'reviewed'} onChange={e => sf('revType', e.target.value)} style={{font:'inherit',fontWeight:700,fontSize:'inherit',color:'inherit',border:'none',background:'transparent',cursor:'pointer',padding:0,appearance:'none',WebkitAppearance:'none'}}>
+              <option value="reviewed" style={{color:'#000',background:'#fff'}}>Report Reviewed By</option>
+              <option value="witnessed" style={{color:'#000',background:'#fff'}}>Report Witnessed By</option>
             </select>
+            <span style={{fontSize:10,marginLeft:6,opacity:0.6}}>▼</span>
           </h4>
           <div className="ed-fg"><label>Name</label><input value={proj.revName} onChange={e => sf('revName', e.target.value)} placeholder="Full Name" /></div>
           <div className="ed-fg"><label>Designation</label><input value={proj.revDesig} onChange={e => sf('revDesig', e.target.value)} placeholder="e.g. QA Manager" /></div>
