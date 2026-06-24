@@ -95,7 +95,7 @@ export default function ReportPreview({ sections, proj, rptType, onClose, autoPr
             </div>
           </div>
           <div className="rpt-sign-box">
-            <h4>Report Reviewed By</h4>
+            <h4>{proj.revType === 'witnessed' ? 'Report Witnessed By' : 'Report Reviewed By'}</h4>
             <table><tbody><tr><td>Name:</td><td><b>{proj.revName}</b></td></tr><tr><td>Designation:</td><td>{proj.revDesig}</td></tr><tr><td>Date:</td><td>{proj.revDate}</td></tr></tbody></table>
             <div style={{display:'flex',gap:12,marginTop:8,alignItems:'center'}}>
               {proj.revSignatureImg && <img src={proj.revSignatureImg} alt="Reviewer Signature" style={{maxWidth:150,maxHeight:60,objectFit:'contain'}} />}

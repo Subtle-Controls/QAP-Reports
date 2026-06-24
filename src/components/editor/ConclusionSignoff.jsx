@@ -32,7 +32,12 @@ export default function ConclusionSignoff({ proj, setProj, setStep }) {
           <div className="ed-fg"><label>Date</label><input type="date" value={proj.inspDate} onChange={e => sf('inspDate', e.target.value)} /></div>
         </div>
         <div className="ed-sign-box">
-          <h4>Report Reviewed By</h4>
+          <h4>
+            <select value={proj.revType || 'reviewed'} onChange={e => sf('revType', e.target.value)} style={{font:'inherit',fontWeight:700,border:'1px solid var(--border)',borderRadius:6,padding:'4px 8px',background:'var(--bg)',cursor:'pointer'}}>
+              <option value="reviewed">Report Reviewed By</option>
+              <option value="witnessed">Report Witnessed By</option>
+            </select>
+          </h4>
           <div className="ed-fg"><label>Name</label><input value={proj.revName} onChange={e => sf('revName', e.target.value)} placeholder="Full Name" /></div>
           <div className="ed-fg"><label>Designation</label><input value={proj.revDesig} onChange={e => sf('revDesig', e.target.value)} placeholder="e.g. QA Manager" /></div>
           <div className="ed-fg"><label>Date</label><input type="date" value={proj.revDate} onChange={e => sf('revDate', e.target.value)} /></div>
