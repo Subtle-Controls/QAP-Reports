@@ -992,11 +992,13 @@ body {
 @media print{
   @page { margin: 8mm 10mm; size: A4 portrait; }
 
-  /* Hide everything outside the report overlay */
-  body > *:not(#root) { display:none!important; }
+  /* Hide ALL app UI — only show the report document */
+  body > * { display:none!important; }
+  #root { display:block!important; }
+  #root > * { display:none!important; }
 
-  /* The report preview uses window.print() while the overlay is open.
-     We simply let .rpt-overlay and .rpt-doc flow as normal static elements. */
+  /* Show only the overlay (which contains the report) */
+  .rpt-overlay { display:block!important; }
   .rpt-overlay{
     position:static!important;
     width:100%!important;height:auto!important;overflow:visible!important;
@@ -1004,6 +1006,7 @@ body {
     backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
   }
   .rpt-doc{
+    display:block!important;
     position:static!important;
     width:100%!important;height:auto!important;
     box-shadow:none!important;max-width:100%!important;
