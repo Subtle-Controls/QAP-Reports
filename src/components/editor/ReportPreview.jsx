@@ -87,7 +87,7 @@ export default function ReportPreview({ sections, proj, rptType, onClose, autoPr
         {/* Sign-off */}
         <div className="rpt-sign">
           <div className="rpt-sign-box">
-            <h4>Product Tested By</h4>
+            <h4>Tested By</h4>
             <table><tbody><tr><td>Name:</td><td><b>{proj.testName}</b></td></tr><tr><td>Designation:</td><td>{proj.testDesig}</td></tr><tr><td>Date:</td><td>{proj.testDate}</td></tr></tbody></table>
             <div style={{display:'flex',gap:12,marginTop:8,alignItems:'center'}}>
               {proj.testSignatureImg && <img src={proj.testSignatureImg} alt="Tester Signature" style={{maxWidth:150,maxHeight:60,objectFit:'contain'}} />}
@@ -95,7 +95,7 @@ export default function ReportPreview({ sections, proj, rptType, onClose, autoPr
             </div>
           </div>
           <div className="rpt-sign-box">
-            <h4>Product Inspected By</h4>
+            <h4>Reviewed By</h4>
             <table><tbody><tr><td>Name:</td><td><b>{proj.inspName}</b></td></tr><tr><td>Designation:</td><td>{proj.inspDesig}</td></tr><tr><td>Date:</td><td>{proj.inspDate}</td></tr></tbody></table>
             <div style={{display:'flex',gap:12,marginTop:8,alignItems:'center'}}>
               {proj.inspSignatureImg && <img src={proj.inspSignatureImg} alt="Inspector Signature" style={{maxWidth:150,maxHeight:60,objectFit:'contain'}} />}

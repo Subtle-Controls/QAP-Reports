@@ -32,7 +32,7 @@ export default function ConclusionSignoff({ proj, setProj, setStep }) {
           <div className="ed-fg"><label>Date</label><input type="date" value={proj.testDate||''} onChange={e => sf('testDate', e.target.value)} /></div>
         </div>
         <div className="ed-sign-box">
-          <h4>Product Reviewed By</h4>
+          <h4>Reviewed By</h4>
           <div className="ed-fg"><label>Name</label><input value={proj.inspName} onChange={e => sf('inspName', e.target.value)} placeholder="Full Name" /></div>
           <div className="ed-fg"><label>Designation</label><input value={proj.inspDesig} onChange={e => sf('inspDesig', e.target.value)} placeholder="e.g. QA Engineer" /></div>
           <div className="ed-fg"><label>Date</label><input type="date" value={proj.inspDate} onChange={e => sf('inspDate', e.target.value)} /></div>
@@ -40,8 +40,8 @@ export default function ConclusionSignoff({ proj, setProj, setStep }) {
         <div className="ed-sign-box">
           <h4>
             <select value={proj.revType || 'reviewed'} onChange={e => sf('revType', e.target.value)} style={{font:'inherit',fontWeight:700,fontSize:'inherit',color:'inherit',border:'none',background:'transparent',cursor:'pointer',padding:0,appearance:'none',WebkitAppearance:'none'}}>
-              <option value="witnessed" style={{color:'#000',background:'#fff'}}>Report Witnessed By</option>
-              <option value="virtually_witnessed" style={{color:'#000',background:'#fff'}}>Product Virtually Witnessed By</option>
+              <option value="witnessed" style={{color:'#000',background:'#fff'}}>Witnessed By</option>
+              <option value="virtually_witnessed" style={{color:'#000',background:'#fff'}}>Virtually Witnessed By</option>
             </select>
             <span style={{fontSize:10,marginLeft:6,opacity:0.6}}>▼</span>
           </h4>
