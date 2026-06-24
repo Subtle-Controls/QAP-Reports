@@ -990,18 +990,30 @@ body {
    PRINT STYLES
    ═══════════════════════════════════════════════════════════ */
 @media print{
-  /* Hide EVERYTHING, then reveal only the report document */
+  /* Hide everything except the report */
   body * { visibility:hidden!important; }
-  .rpt-doc,.rpt-doc *{ visibility:visible!important; }
+  .rpt-overlay, .rpt-overlay * { visibility:visible!important; }
+  .rpt-doc, .rpt-doc * { visibility:visible!important; }
+
+  /* Remove overlay positioning so document flows naturally across pages */
+  .rpt-overlay{
+    position:absolute!important;top:0!important;left:0!important;
+    width:100%!important;height:auto!important;overflow:visible!important;
+    background:#fff!important;padding:0!important;z-index:auto!important;
+  }
   .rpt-doc{
-    position:fixed!important;top:0!important;left:0!important;
+    position:relative!important;top:0!important;left:0!important;
     width:100%!important;height:auto!important;
     box-shadow:none!important;max-width:100%!important;
     margin:0!important;border-radius:0!important;overflow:visible!important;
     background:#fff!important;
   }
-  body{background:#fff!important;margin:0!important;padding:0!important;}
-  .rpt-sec{page-break-inside:avoid;box-shadow:none!important;margin:0 12px 10px!important;border:1px solid #ccc!important;}
+  /* Hide toolbar in print */
+  .rpt-toolbar, .no-print{ display:none!important; visibility:hidden!important; }
+
+  body{background:#fff!important;margin:0!important;padding:0!important;overflow:visible!important;}
+  html{overflow:visible!important;}
+  .rpt-sec{page-break-inside:avoid;box-shadow:none!important;margin:0 12px 10px!important;border:1px solid #ccc!important;overflow:visible!important;}
   .rpt-hdr{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:14px 20px!important;}
   .rpt-sec-hd{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:6px 10px!important;}
   .rpt-foot{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:6px 20px!important;}
@@ -1015,8 +1027,8 @@ body {
   .rpt-tbl td{font-size:9px!important;padding:4px 6px!important;}
   .rpt-sec-num{width:18px!important;height:18px!important;font-size:8px!important;}
   .rpt-sec-title{font-size:9px!important;}
-  .rpt-conc{padding:10px 20px!important;}
-  .rpt-sign{padding:10px 20px!important;gap:12px!important;}
+  .rpt-conc{padding:10px 20px!important;page-break-inside:avoid;}
+  .rpt-sign{padding:10px 20px!important;gap:12px!important;page-break-inside:avoid;}
   .rpt-sign-box{padding:8px!important;}
   .rpt-co1{font-size:13px!important;}
   .rpt-co2{font-size:8px!important;}
